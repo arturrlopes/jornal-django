@@ -1,0 +1,167 @@
+ 
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ artigo.titulo }} | Jornal Online</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .artigo-card {
+            background: white;
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            margin-bottom: 2rem;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .voltar-link {
+            display: inline-block;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            transition: transform 0.2s ease;
+        }
+
+        .voltar-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .artigo-header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .artigo-titulo {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #1a202c;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .artigo-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            color: #64748b;
+            font-size: 1rem;
+        }
+
+        .artigo-data {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f1f5f9;
+            padding: 8px 16px;
+            border-radius: 50px;
+        }
+
+        .artigo-corpo {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #334155;
+            margin-bottom: 2.5rem;
+        }
+
+        .artigo-corpo p {
+            margin-bottom: 1.5rem;
+        }
+
+        .comentarios-section {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .btn-comentarios {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-comentarios:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.5);
+        }
+
+        @media (max-width: 600px) {
+            .artigo-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .artigo-titulo {
+                font-size: 2rem;
+            }
+            
+            .artigo-corpo {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'lista_artigos' %}" class="voltar-link">← Voltar às notícias</a>
+        
+        <article class="artigo-card">
+            <header class="artigo-header">
+                <h1 class="artigo-titulo">{{ artigo.titulo }}</h1>
+                <div class="artigo-meta">
+                    <span class="artigo-data">
+                        📅 {{ artigo.data_publicacao|date:"d \d\e F \d\e Y" }}
+                    </span>
+                    <span class="artigo-data">
+                        🕐 {{ artigo.data_publicacao|date:"H:i" }}
+                    </span>
+                </div>
+            </header>
+
+            <div class="artigo-corpo">
+                {{ artigo.corpo|linebreaks }}
+            </div>
+
+            <div class="comentarios-section">
+                <a href="{% url 'comentarios_artigo' artigo.id %}" class="btn-comentarios">
+                    💬 Ver comentários e participar
+                </a>
+            </div>
+        </article>
+    </div>
+</body>
+</html>
